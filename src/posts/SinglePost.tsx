@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {deletePost, Post, updatePost} from "./PostsSlice";
 import {Button, Card, CardBody, CardText, Input} from "reactstrap";
 import {useDispatch} from "react-redux";
@@ -12,6 +12,9 @@ const SinglePost: React.FC<SinglePostProps> = ({post}) => {
     const [editMode, setEditMode] = useState(false);
     const [currentPost, setCurrentPost] = useState<Post>(post);
     const dispatch = useDispatch();
+    useEffect(() => {
+        setCurrentPost(post);
+    }, [post]);
     const TextEditField = (editMode: boolean, currentPost: Post) => {
         if (editMode) {
             return (
