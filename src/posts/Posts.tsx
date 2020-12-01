@@ -1,14 +1,31 @@
 // @flow
 import * as React from 'react';
+import {useEffect} from 'react';
 import {PostAddFrom} from "./PostAddFrom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../app/store";
 import SinglePost from "./SinglePost";
+import {fetchPosts, PostStatus} from "./PostsSlice";
+
 
 export function Posts() {
 
-    const postsSelection = useSelector((state: RootState) => state.posts);
-    const posts = postsSelection.map(post => {
+    const dispatch = useDispatch();
+    const postsSelection = useSelector((state: RootState) => state.posts.posts);
+    const postsStatus = useSelector((state: RootState) => state.posts.status);
+    useEffect(() => {
+        if (postsStatus === PostStatus.IDLE) {
+            console.log(postsStatus);
+            dispatch(fetchPosts());
+        }
+    }, [postsStatus, dispatch]);
+
+
+    if (postsStatus === PostStatus.IDLE) {
+        return <h1>Loading</h1>;
+    }
+
+    let posts = postsSelection.map(post => {
         return <SinglePost post={post} key={post.id}/>;
     })
     return (

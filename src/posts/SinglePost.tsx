@@ -26,10 +26,10 @@ const SinglePost: React.FC<SinglePostProps> = ({post}) => {
                                })
                            }}
                     />
-                    <Input value={currentPost.text}
+                    <Input value={currentPost.body}
                            onChange={e => {
                                setCurrentPost(prevState => {
-                                   return {...prevState, text: e.target.value}
+                                   return {...prevState, body: e.target.value}
                                })
                            }}
                     />
@@ -39,7 +39,7 @@ const SinglePost: React.FC<SinglePostProps> = ({post}) => {
             return (
                 <>
                     <CardText tag={"h5"}>{currentPost.title}</CardText>
-                    <CardText tag={"p"}>{currentPost.text}</CardText>
+                    <CardText tag={"p"}>{currentPost.body}</CardText>
                 </>
             );
         }

@@ -9,7 +9,7 @@ import {RootState} from "../app/store";
 export function PostAddFrom() {
     const posts = useSelector((state: RootState) => state.posts);
     const dispatch = useDispatch();
-    const emptyPost: Post = {id: 0, title: '', text: ''};
+    const emptyPost: Post = {id: 0, title: '', body: ''};
     const [post, modifyPost] = useState<Post>(emptyPost);
     return (
         <div>
@@ -26,9 +26,9 @@ export function PostAddFrom() {
                 <FormGroup>
                     <Label for="text">Text</Label>
                     <Input type="text" name="text" placeholder="Enter text"
-                           value={post.text}
+                           value={post.body}
                            onChange={e => modifyPost(prevState => {
-                               return {...prevState, text: e.target.value};
+                               return {...prevState, body: e.target.value};
                            })}
                     />
                 </FormGroup>

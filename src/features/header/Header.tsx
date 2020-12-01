@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 
 
 export function Header() {
-    const posts = useSelector((state: RootState) => state.posts);
+    const postsState = useSelector((state: RootState) => state.posts);
 
     return (
         <>
@@ -23,7 +23,7 @@ export function Header() {
                         <NavLink tag={Link} to="/table">Table</NavLink>
                     </NavItem>
                 </Nav>
-                <NavbarText>Total posts: {posts.length}</NavbarText>
+                <NavbarText>Total posts: {postsState.posts.length}</NavbarText>
             </Navbar>
         </>
     );
