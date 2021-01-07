@@ -6,6 +6,10 @@ import {Container} from "reactstrap";
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import About from "./about/About";
 import TableComponent from "./table/Table";
+export const delay = async (ms: number = 3000) => {
+    console.log(`waiting ms`);
+    return new Promise(resolve => setTimeout(resolve, ms));
+};
 
 function App() {
     return (
@@ -21,7 +25,7 @@ function App() {
                         <About/>
                     </Route>
                     <Route path="/table">
-                        <TableComponent/>
+                        <TableComponent imageUrl={'null'}/>
                     </Route>
                 </Container>
             </div>

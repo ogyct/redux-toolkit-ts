@@ -1,7 +1,9 @@
-import React from 'react';
-import {Button, Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle} from "reactstrap";
+import React, { useRef } from 'react';
+import { Button, Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
 
 const About = () => {
+
+    const inputRef = useRef<HTMLInputElement>(null);
     return (
         <div>
             <Card>
@@ -12,6 +14,8 @@ const About = () => {
                     <Button>Button</Button>
                 </CardBody>
             </Card>
+            <input ref={inputRef} type="text"/>
+            <button onClick={event => inputRef.current?.focus()}>Test Ref</button>
         </div>
     );
 };
