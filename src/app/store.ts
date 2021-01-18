@@ -1,12 +1,15 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { Action, configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
-import {postsSlice} from "../posts/PostsSlice";
+import { postsSlice } from "../posts/PostsSlice";
 import { useDispatch } from 'react-redux';
+import { ThunkAction } from 'redux-thunk';
+import { authSlice } from '../auth/AuthSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    posts: postsSlice.reducer
+    posts: postsSlice.reducer,
+    auth: authSlice.reducer,
   },
 });
 

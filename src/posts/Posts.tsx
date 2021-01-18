@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../app/store";
 import SinglePost from "./SinglePost";
 import { fetchComments, fetchPosts, LoadingStatus, Post } from "./PostsSlice";
+import { Spinner } from 'reactstrap';
+import { spinner } from '../common/common';
 
 
 export function Posts() {
@@ -17,36 +19,18 @@ export function Posts() {
     const commentsSelection = useSelector((state: RootState) => state.posts.comments);
 
     useEffect(() => {
+
         (async () => {
             if (postsStatus === LoadingStatus.IDLE) {
                 const res = await dispatch(fetchPosts());
                 const posts = res.payload as Post[];
-                console.log(posts);
                 const res1 = await dispatch(fetchComments(posts[0].id));
                 const comments = res1.payload as Comment[];
-                console.log(comments);
             }
         })();
     }, [postsStatus, dispatch]);
 
-    // useEffect(() => {
-    //
-    //     if (postsStatus === LoadingStatus.IDLE) {
-    //         dispatch(fetchPosts());
-    //     }
-    //     if (postsStatus === LoadingStatus.READY) {
-    //         if (commentsStatus === LoadingStatus.IDLE) {
-    //             dispatch(fetchComments(postsSelection[0].id));
-    //         }
-    //     }
-    //
-    // }, [postsStatus, dispatch]);
 
-    console.log(commentsSelection);
-
-    if (postsStatus === LoadingStatus.IDLE) {
-        return <h1>Loading</h1>;
-    }
 
     let posts = postsSelection.map(post => {
         return <SinglePost post={post} key={post.id}/>;
@@ -54,7 +38,7 @@ export function Posts() {
     return (
       <div>
           <div className="mb-2"><PostAddFrom/></div>
-          <div className="mb-2">{posts}</div>
+          <div className="mb-2">{(postsStatus === LoadingStatus.LOADING) ? spinner() : posts}</div>
       </div>
     );
 }

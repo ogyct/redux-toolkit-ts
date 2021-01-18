@@ -1,35 +1,41 @@
 import React from 'react';
 import './App.css';
-import {Posts} from "./posts/Posts";
-import {Header} from "./features/header/Header";
-import {Container} from "reactstrap";
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
+import { Posts } from "./posts/Posts";
+import { Header } from "./features/header/Header";
+import { Button, Col, Container, Row } from "reactstrap";
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import About from "./about/About";
 import TableComponent from "./table/Table";
-export const delay = async (ms: number = 3000) => {
-    console.log(`waiting ms`);
-    return new Promise(resolve => setTimeout(resolve, ms));
-};
+import ProtectedRoute from './common/ProtectedRoute';
+import ProtectedComponent from './protected/ProtectedComponent';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLongArrowAltLeft } from "@fortawesome/free-solid-svg-icons";
+
 
 function App() {
+    const history = useHistory();
     return (
-        <BrowserRouter>
-            <div className="App ">
-                <Header/>
-                <Container className="container container-lg border rounded">
-                    <Route exact path="/"><Redirect to="/posts"/></Route>
-                    <Route path="/posts">
-                        <Posts/>
-                    </Route>
-                    <Route path="/about">
-                        <About/>
-                    </Route>
-                    <Route path="/table">
-                        <TableComponent imageUrl={'null'}/>
-                    </Route>
-                </Container>
-            </div>
-        </BrowserRouter>
+      <div className="App">
+          <Header/>
+          <Container className="container container-lg">
+              <Row>
+                  <Col className="pl-1 pt-4" xs="auto">
+                      <Button onClick={() => history.goBack()} className="">
+                          <FontAwesomeIcon icon={faLongArrowAltLeft} size='2x'/>
+                      </Button>
+                  </Col>
+                  <Col className='border rounded'>
+                      <Switch>
+                          <Route exact path="/"><Redirect to="/posts"/></Route>
+                          <Route path="/posts" component={Posts}/>
+                          <Route path="/about" component={About}/>
+                          <Route path="/table" component={TableComponent}/>
+                          <ProtectedRoute exact path="/protected" component={ProtectedComponent}/>
+                      </Switch>
+                  </Col>
+              </Row>
+          </Container>
+      </div>
     );
 }
 

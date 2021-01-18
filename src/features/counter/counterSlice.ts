@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, RootState } from '../../app/store';
+import { AsyncThunkAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AppDispatch, AppThunk, RootState } from '../../app/store';
 
 interface CounterState {
   value: number;
@@ -36,10 +36,18 @@ export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
 // will call the thunk with the `dispatch` function as the first argument. Async
 // code can then be executed and other actions can be dispatched
-export const incrementAsync = (amount: number): AppThunk => function (dispatch) {
+export const incrementAsync = (amount: number): AppThunk<Promise<void>> => async (dispatch) => {
   setTimeout(() => {
     dispatch(incrementByAmount(amount));
   }, 1000);
+};
+
+export const returnSomethingAsync = (): AppThunk<Promise<number>> => async (dispatch, getState) => {
+  return 1;
+};
+
+export const returnSomethingPromise = (): AppThunk<Promise<number>> => () => {
+  return Promise.resolve(1);
 };
 
 // The function below is called a selector and allows us to select a value from

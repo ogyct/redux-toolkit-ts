@@ -7,7 +7,6 @@ import { addPost, Post } from "./PostsSlice";
 import { RootState } from "../app/store";
 
 export function PostAddFrom() {
-  const posts = useSelector((state: RootState) => state.posts);
   const dispatch = useDispatch();
   const emptyPost: Post = { id: 0, title: '', body: '' };
   const [post, modifyPost] = useState<Post>(emptyPost);

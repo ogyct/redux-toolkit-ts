@@ -27,10 +27,22 @@ const initialState = {
     postsStatus: LoadingStatus.IDLE,
     commentsStatus: LoadingStatus.IDLE,
 };
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
+export const fetchPost = async (id: number) => {
+    //simulate slow response
+    //non async await example
+    // const a = delay(1000).then(_ => fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
+    //   .then(value => value.json() as Promise<Post>));
+    await delay(1000);
+    return await (await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)).json() as Promise<Post>;
+
+
+};
 
 export const fetchPosts = createAsyncThunk('Posts/fetchPosts', async (_, thunkAPI) => {
     const result = await fetch('https://jsonplaceholder.typicode.com/posts');
+    await delay(2000);
     const posts = await result.json() as Post[];
     // thunkAPI.dispatch(fetchComments(posts[0].id));
     return posts;

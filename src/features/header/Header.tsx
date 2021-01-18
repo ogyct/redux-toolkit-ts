@@ -22,6 +22,9 @@ export function Header() {
                     <NavItem className="mr-auto">
                         <NavLink tag={Link} to="/table">Table</NavLink>
                     </NavItem>
+                    <NavItem className="mr-auto">
+                        <NavLink tag={Link} to="/protected">Protected source</NavLink>
+                    </NavItem>
                 </Nav>
                 <NavbarText>Total posts: {postsState.posts.length}</NavbarText>
             </Navbar>
