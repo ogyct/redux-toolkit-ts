@@ -42,8 +42,10 @@ export const fetchPost = async (id: number) => {
 
 export const fetchPosts = createAsyncThunk('Posts/fetchPosts', async (_, thunkAPI) => {
     const result = await fetch('https://jsonplaceholder.typicode.com/posts');
+    //simulate delay
     await delay(2000);
     const posts = await result.json() as Post[];
+    // actions can be dispatched like this
     // thunkAPI.dispatch(fetchComments(posts[0].id));
     return posts;
 });

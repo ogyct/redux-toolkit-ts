@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { Posts } from "./posts/Posts";
 import { Header } from "./features/header/Header";
@@ -11,7 +11,9 @@ import ProtectedComponent from './protected/ProtectedComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowAltLeft } from "@fortawesome/free-solid-svg-icons";
 
+useEffect(() => {
 
+});
 function App() {
     const history = useHistory();
     return (
