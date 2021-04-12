@@ -1,24 +1,20 @@
 import { Action, configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
-import { postsSlice } from "../posts/PostsSlice";
 import { useDispatch } from 'react-redux';
 import { ThunkAction } from 'redux-thunk';
-import { authSlice } from '../auth/AuthSlice';
+import { postsSlice } from './slices/PostsSlice';
+import { commentsSlice } from './slices/CommentsSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     posts: postsSlice.reducer,
-    auth: authSlice.reducer,
+    comments: commentsSlice.reducer,
   },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
   RootState,
   unknown,
-  Action<string>
->;
+  Action<string>>;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();

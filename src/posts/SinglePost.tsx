@@ -1,67 +1,39 @@
-import React, {useEffect, useState} from 'react';
-import {deletePost, Post, updatePost} from "./PostsSlice";
-import {Button, Card, CardBody, CardText, Input} from "reactstrap";
-import {useDispatch} from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Button, Card, CardBody, CardText } from "reactstrap";
+import { useDispatch } from "react-redux";
+import { deletePost, Post } from "../slices/PostsSlice";
+import { useHistory } from "react-router-dom";
 
 interface SinglePostProps {
-    post: Post,
+  post: Post;
 }
 
+const SinglePost: React.FC<SinglePostProps> = ({ post }) => {
+  const [currentPost, setCurrentPost] = useState<Post>(post);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    setCurrentPost(post);
+  }, [post]);
 
-const SinglePost: React.FC<SinglePostProps> = ({post}) => {
-    const [editMode, setEditMode] = useState(false);
-    const [currentPost, setCurrentPost] = useState<Post>(post);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        setCurrentPost(post);
-    }, [post]);
-    const TextEditField = (editMode: boolean, currentPost: Post) => {
-        if (editMode) {
-            return (
-                <>
-                    <Input value={currentPost.title}
-                           onChange={e => {
-                               setCurrentPost(prevState => {
-                                   return {...prevState, title: e.target.value}
-                               })
-                           }}
-                    />
-                    <Input value={currentPost.body}
-                           onChange={e => {
-                               setCurrentPost(prevState => {
-                                   return {...prevState, body: e.target.value}
-                               })
-                           }}
-                    />
-                </>
-            )
-        } else {
-            return (
-                <>
-                    <CardText tag={"h5"}>{currentPost.title}</CardText>
-                    <CardText tag={"p"}>{currentPost.body}</CardText>
-                </>
-            );
-        }
-    };
-    const editButtonText = editMode ? 'Save' : 'Edit';
-    const editButtonColor = editMode ? 'success' : 'info';
-    return (
-        <Card body outline color="secondary">
-            <CardBody>
-                {TextEditField(editMode, currentPost)}
-                <Button onClick={() => dispatch(deletePost(post.id))} color="danger">Delete{' '}</Button>
-                <Button onClick={() => {
-                    if (editMode) {
-                        dispatch(updatePost(currentPost));
-                    }
-                    setEditMode(prevState => !prevState);
-
-                }}
-                        color={editButtonColor}>{editButtonText} post</Button>
-            </CardBody>
-        </Card>
-    );
+  return (
+    <Card className='border-0 m-2' body color="light">
+      <CardBody>
+        <CardText tag={"h5"}>{currentPost.title}</CardText>
+        <CardText tag={"p"}>{currentPost.body}</CardText>
+        <Button onClick={() => dispatch(deletePost(post.id))} color="danger">
+          Delete{" "}
+        </Button>{" "}
+        <Button
+          onClick={() => {
+            history.push(`post/${post.id}`);
+          }}
+        >
+          Edit post
+        </Button>
+      </CardBody>
+    </Card>
+  );
 };
 
 

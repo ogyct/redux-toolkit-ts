@@ -1,44 +1,43 @@
 // @flow
-import * as React from 'react';
-import { useEffect } from 'react';
+import * as React from "react";
 import { PostAddFrom } from "./PostAddFrom";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../app/store";
+import { RootState } from "../store";
 import SinglePost from "./SinglePost";
-import { fetchComments, fetchPosts, LoadingStatus, Post } from "./PostsSlice";
-import { Spinner } from 'reactstrap';
-import { spinner } from '../common/common';
-
+import { LoadingStatus, postSelectors } from "../slices/PostsSlice";
+import { spinner } from "../common/common";
+import { Button } from "reactstrap";
+import { useState } from "react";
 
 export function Posts() {
-    useEffect(() => console.log('mount'), []);
-    const dispatch = useAppDispatch();
-    const postsSelection = useSelector((state: RootState) => state.posts.posts);
-    const postsStatus = useSelector((state: RootState) => state.posts.postsStatus);
-    const commentsStatus = useSelector((state: RootState) => state.posts.commentsStatus);
-    const commentsSelection = useSelector((state: RootState) => state.posts.comments);
+  const postsStatus = useSelector(
+    (state: RootState) => state.posts.postsStatus
+  );
+  const postsSelection = useSelector((state: RootState) =>
+    postSelectors.selectAll(state)
+  );
+  const [creationMode, setCreationMode] = useState(false);
 
-    useEffect(() => {
-
-        (async () => {
-            if (postsStatus === LoadingStatus.IDLE) {
-                const res = await dispatch(fetchPosts());
-                const posts = res.payload as Post[];
-                const res1 = await dispatch(fetchComments(posts[0].id));
-                const comments = res1.payload as Comment[];
-            }
-        })();
-    }, [postsStatus, dispatch]);
-
-
-
-    let posts = postsSelection.map(post => {
-        return <SinglePost post={post} key={post.id}/>;
-    })
-    return (
-      <div>
-          <div className="mb-2"><PostAddFrom/></div>
-          <div className="mb-2">{(postsStatus === LoadingStatus.LOADING) ? spinner() : posts}</div>
+  let posts = postsSelection.map((post) => {
+    return <SinglePost post={post} key={post.id} />;
+  });
+  return (
+    <div>
+      {!creationMode && (
+        <>
+          <Button onClick={() => setCreationMode(true)} color="primary">
+            Create new post
+          </Button>
+        </>
+      )}
+      {creationMode && (
+        <div className="mb-2">
+          <PostAddFrom setCreationMode={setCreationMode} />
+        </div>
+      )}
+      <div className="mb-2">
+        {postsStatus === LoadingStatus.LOADING ? spinner() : posts}
       </div>
-    );
+    </div>
+  );
 }
