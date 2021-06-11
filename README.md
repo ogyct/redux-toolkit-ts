@@ -5,4 +5,8 @@ Built using typescript, react, redux toolkit, reactstrap
 
 ## Try it
 
-`yarn start` or visit https://ogyct.github.io/redux-toolkit-ts/
+```bash
+yarn install
+yarn start
+``` 
+or visit https://ogyct.github.io/redux-toolkit-ts/
