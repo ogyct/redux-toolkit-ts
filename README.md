@@ -10,3 +10,5 @@ yarn install
 yarn start
 ``` 
 or visit https://ogyct.github.io/redux-toolkit-ts/
+
+github actions implemented
