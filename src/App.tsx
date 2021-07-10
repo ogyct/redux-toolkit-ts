@@ -8,7 +8,7 @@ import PostDetail from "./postdetail/PostDetail";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "./store";
 import { fetchPosts, LoadingStatus } from "./slices/PostsSlice";
-import About from './about/About';
+import About from "./about/About";
 
 function App() {
   const dispatch = useAppDispatch();
