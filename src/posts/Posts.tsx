@@ -8,17 +8,14 @@ import { LoadingStatus, postSelectors } from "../slices/PostsSlice";
 import { spinner } from "../common/common";
 import { Button } from "reactstrap";
 import { useState } from "react";
+import {useGetPostsByUserIdQuery} from "../slices/PostsApi";
 
 export function Posts() {
-  const postsStatus = useSelector(
-    (state: RootState) => state.posts.postsStatus
-  );
-  const postsSelection = useSelector((state: RootState) =>
-    postSelectors.selectAll(state)
-  );
+
+  const {data, error, isLoading} = useGetPostsByUserIdQuery(1);
   const [creationMode, setCreationMode] = useState(false);
 
-  let posts = postsSelection.map((post) => {
+  let posts = data?.map((post) => {
     return <SinglePost post={post} key={post.id} />;
   });
   return (
@@ -36,7 +33,7 @@ export function Posts() {
         </div>
       )}
       <div className="mb-2">
-        {postsStatus === LoadingStatus.LOADING ? spinner() : posts}
+        {isLoading ? spinner() : posts}
       </div>
     </div>
   );

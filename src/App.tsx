@@ -1,29 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
-import { Posts } from "./posts/Posts";
-import { Header } from "./header/Header";
-import { Col, Container, Row } from "reactstrap";
-import { Redirect, Route, Switch } from "react-router-dom";
+import {Posts} from "./posts/Posts";
+import {Header} from "./header/Header";
+import {Col, Container, Row} from "reactstrap";
+import {Redirect, Route, Switch} from "react-router-dom";
 import PostDetail from "./postdetail/PostDetail";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "./store";
-import { fetchPosts, LoadingStatus } from "./slices/PostsSlice";
 import About from "./about/About";
 
 function App() {
-  const dispatch = useAppDispatch();
-  const postsStatus = useSelector(
-    (state: RootState) => state.posts.postsStatus
-  );
 
-  useEffect(() => {
-    (async () => {
-      if (postsStatus === LoadingStatus.IDLE) {
-        await dispatch(fetchPosts());
-      }
-    })();
-  }, [postsStatus]);
 
   return (
     <div className="App">

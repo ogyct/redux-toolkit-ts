@@ -1,25 +1,14 @@
-import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  CardText,
-  CardTitle,
-  Input,
-} from "reactstrap";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../store";
-import { postSelectors, putUpdatedPost } from "../slices/PostsSlice";
+import React, {useEffect, useState} from "react";
+import {Button, Card, CardBody, CardHeader, CardText, CardTitle, Input,} from "reactstrap";
+import {useParams} from "react-router-dom";
 import Comments from "./Comments";
+import {useGetPostQuery, useUpdatePostMutation} from "../slices/PostsApi";
 
 const PostDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const currentPost = useSelector((state: RootState) =>
-    postSelectors.selectById(state, id)
-  );
-  const dispatch = useAppDispatch();
+  const {data: currentPost, isLoading} = useGetPostQuery(+id);
+  const [updatePost, {isLoading: isUpdating}] = useUpdatePostMutation();
+
 
   const [editMode, setEditMode] = useState(false);
   const [title, setTitle] = useState("");
@@ -60,7 +49,7 @@ const PostDetail = () => {
         className="m-2"
         color="primary"
         onClick={() => {
-          dispatch(putUpdatedPost({ ...currentPost!, title, body }));
+          currentPost && updatePost({...currentPost, title, body})
           setEditMode(false);
         }}
       >
