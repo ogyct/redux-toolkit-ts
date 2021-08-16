@@ -1,16 +1,12 @@
 // @flow
 import * as React from "react";
 import { Nav, Navbar, NavbarText, NavItem, NavLink } from "reactstrap";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
 import { Link } from "react-router-dom";
 import ControlsComponent from "../controls/ControlsComponent";
-import { postSelectors } from "../slices/PostsSlice";
+import { useGetPostsQuery } from "../slices/PostsApi";
 
 export function Header() {
-  const postsState = useSelector((state: RootState) =>
-    postSelectors.selectIds(state)
-  );
+  const { data } = useGetPostsQuery();
 
   return (
     <>
@@ -28,10 +24,8 @@ export function Header() {
           </NavItem>
         </Nav>
         <ControlsComponent />
-        <NavbarText className="pl-3">
-          Total posts: {postsState.length}
-        </NavbarText>
+        <NavbarText className="pl-3">Total posts: {data?.length}</NavbarText>
       </Navbar>
     </>
   );
-};
+}

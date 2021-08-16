@@ -4,7 +4,7 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { LoadingStatus } from "./PostsSlice";
+import {LoadingStatus} from "../common/common";
 
 export interface Comment {
   postId: number;

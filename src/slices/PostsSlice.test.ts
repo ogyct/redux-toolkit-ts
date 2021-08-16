@@ -1,6 +1,7 @@
-import { addPost, fetchPosts, Post } from './PostsSlice';
+import { addPost, fetchPosts} from './PostsSlice';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk'
+import {Post} from "../common/common";
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);

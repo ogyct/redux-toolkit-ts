@@ -6,7 +6,7 @@ import {useGetPostQuery, useUpdatePostMutation} from "../slices/PostsApi";
 
 const PostDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const {data: currentPost, isLoading} = useGetPostQuery(+id);
+  const {data: currentPost, isLoading} = useGetPostQuery(id);
   const [updatePost, {isLoading: isUpdating}] = useUpdatePostMutation();
 
 
@@ -48,8 +48,8 @@ const PostDetail = () => {
       <Button
         className="m-2"
         color="primary"
-        onClick={() => {
-          currentPost && updatePost({...currentPost, title, body})
+        onClick={async () => {
+          currentPost && await updatePost({...currentPost, title, body}).unwrap()
           setEditMode(false);
         }}
       >

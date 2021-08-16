@@ -5,7 +5,6 @@ import { commentsSelector, fetchPostComments } from "../slices/CommentsSlice";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../store";
 import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
-import { LoadingStatus } from "../slices/PostsSlice";
 import { spinner } from "../common/common";
 
 const Comments = () => {
@@ -36,7 +35,6 @@ const Comments = () => {
   return (
     <div>
       <h4 className="">
-        Comments {commentsLoadingStatus !== LoadingStatus.READY && spinner()}
       </h4>
       {renderComments()}
     </div>

@@ -4,14 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLongArrowAltLeft, faSync } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { useAppDispatch } from "../store";
-import { fetchPosts } from "../slices/PostsSlice";
 
 const ControlsComponent = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
 
   const reload = () => {
-    dispatch(fetchPosts());
+    // dispatch(fetchPosts());
   };
 
   return (

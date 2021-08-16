@@ -2,16 +2,16 @@
 import * as React from "react";
 import { Dispatch, FC, useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
-import { useDispatch } from "react-redux";
-import { addPost, Post } from "../slices/PostsSlice";
+import { useAddPostMutation } from "../slices/PostsApi";
+import { Post } from "../common/common";
 
 interface PostAddFromProps {
   setCreationMode: Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const PostAddFrom: FC<PostAddFromProps> = ({ setCreationMode }) => {
-  const dispatch = useDispatch();
-  const emptyPost: Post = { id: 0, title: "", body: "" };
+  const emptyPost: Post = { id: "", title: "", body: "" };
+  const [addPost] = useAddPostMutation();
   const [post, modifyPost] = useState<Post>(emptyPost);
 
   return (
@@ -47,14 +47,14 @@ export const PostAddFrom: FC<PostAddFromProps> = ({ setCreationMode }) => {
         </FormGroup>
         <Button
           onClick={() => {
-            dispatch(addPost(post));
+            addPost(post);
             setCreationMode(false);
             modifyPost(() => emptyPost);
           }}
           color="primary"
         >
           Add post
-        </Button> {' '}
+        </Button>{" "}
         <Button onClick={() => setCreationMode(false)} color="dark">
           Cancel
         </Button>
